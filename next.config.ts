@@ -1,7 +1,7 @@
 import { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // output: "standalone", // Vercel deployment config
+  output: "standalone", // Vercel deployment config
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
