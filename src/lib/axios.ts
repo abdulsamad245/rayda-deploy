@@ -25,15 +25,20 @@ instance.interceptors.response.use(
   async (error) => {
     const errorData = (error as AxiosError)?.response?.data || error;
     if (errorData?.errors) {
-      for (const [, value] of Object.entries(errorData.errors.errors)) {
-        if (Array.isArray(value) && value.length > 0) {
-          errorData.message = value[0];
-          break;
-        } else if (typeof value === "string") {
-          errorData.message = value;
-          break;
+      if (typeof errorData.errors === "string"){
+        errorData.message = errorData.errors
+      }else if (typeof errorData.errors === "object"){
+        for (const [, value] of Object.entries(errorData.errors.errors)) {
+          if (Array.isArray(value) && value.length > 0) {
+            errorData.message = value[0];
+            break;
+          } else if (typeof value === "string") {
+            errorData.message = value;
+            break;
+          }
         }
       }
+
     }
 
     return Promise.reject(errorData);

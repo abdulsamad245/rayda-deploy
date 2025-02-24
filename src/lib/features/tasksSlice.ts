@@ -34,7 +34,9 @@ export const fetchTasks = createAsyncThunk(
   async (page?: number) => {
     try {
       const response = await axios.get(`/tasks?page=${page ?? 1}&per_page=${5}`);
+      console.log(response.data)
       return response.data;
+
     } catch (error) {
       const axiosError = error as AxiosError<{ message: string }>;
       throw new Error(`${axiosError?.message}!` || "Failed to fetch tasks!");
@@ -63,7 +65,6 @@ export const updateTask = createAsyncThunk(
       const response = await axios.put(`/tasks/${taskData.id}`, taskData);
       return response.data;
     } catch (error) {
-      
       const axiosError = error as AxiosError<{ message: string }>;
       throw new Error(`${axiosError?.message}!` || "Failed to update tasks!");
 
